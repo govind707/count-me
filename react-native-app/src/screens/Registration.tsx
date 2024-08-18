@@ -12,13 +12,19 @@ export const Registeration = ({ navigation }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
 
-  const { setUserDetails, setUserHistory } = useUserStore();
+  const { setUserDetails, setUserHistory, setLogin } = useUserStore();
 
   const handleRegister = () => {
-    if (!firstName.trim() || !lastName.trim() || !email.trim()) {
+    if (
+      !firstName.trim() ||
+      !lastName.trim() ||
+      !email.trim() ||
+      !password.trim()
+    ) {
       setError("All fields are required");
       return;
     }
@@ -35,6 +41,11 @@ export const Registeration = ({ navigation }) => {
 
     setUserDetails(user);
     setUserHistory(user);
+    setLogin({
+      isLoggedIn: true,
+      email: email.trim(),
+      password: password.trim(),
+    });
 
     alert("User has registered successfully");
 
@@ -67,6 +78,14 @@ export const Registeration = ({ navigation }) => {
         placeholder="Email"
         value={email}
         onChangeText={setEmail}
+        keyboardType="email-address"
+        autoCapitalize="none"
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Email"
+        value={password}
+        onChangeText={setPassword}
         keyboardType="email-address"
         autoCapitalize="none"
       />

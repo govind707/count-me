@@ -35,15 +35,19 @@ export const useUserStore = create<Store>((set) => ({
   },
   setUserHistory: (history: User) => {
     set((state) => ({
-      registrationHistory: [...state.registrationHistory, history],
+      registrationHistory:
+        state.registrationHistory !== undefined
+          ? [...state.registrationHistory, history]
+          : [history],
     }));
   },
   deleteUser: (id: string) => {
     set((state) => ({
-      user: state.user.userId === id ? undefined : state.user,
-      registrationHistory: [
-        ...state.registrationHistory.filter(({ userId }) => userId !== id),
-      ],
+      user: state.user?.userId === id ? undefined : state.user,
+      registrationHistory:
+        state.registrationHistory !== undefined
+          ? [...state.registrationHistory.filter(({ userId }) => userId !== id)]
+          : [],
     }));
   },
   setLogin: (loginDetails: Login) => {
